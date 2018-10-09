@@ -13,13 +13,17 @@ defmodule Words do
     |> word_count()
   end
 
-  defp word_count_reducer(word, acc) do
-    acc
-    |> Map.merge(%{word => 1}, fn _key, v1, v2 -> v1 + v2 end)
-  end
-
+  # reduce the list into a map with the words and their counts
+  @spec word_count(list(String.t())) :: map
   defp word_count(list) do
     list
     |> Enum.reduce(%{}, &word_count_reducer/2)
+  end
+
+  
+  @spec word_count_reducer(String.t(), map) :: map
+  defp word_count_reducer(word, acc) do
+    acc
+    |> Map.merge(%{word => 1}, fn _key, v1, v2 -> v1 + v2 end)
   end
 end
